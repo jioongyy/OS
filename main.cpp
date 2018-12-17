@@ -7,6 +7,23 @@ using namespace std;
 
 int res[100000000];
 int temp[100000000];
+
+inline int Read(int* pos)//inline相当于拷贝的功能减小堆栈加快速度
+{
+	char ch = getchar();
+	int result = 0;
+	if (ch == EOF)	return -1;
+	while (ch<'0' || ch>'9')	ch = getchar();
+	while (ch >= '0'&&ch <= '9')
+	{
+		result = result * 10 + ch - '0';
+		ch = getchar();
+	}
+	*pos = result;
+	if (ch != EOF)	return result;
+	else  return -1;
+}
+
 void myMerge(int l,int r)
 {
 	int mid = l + (r - l) / 2;
@@ -62,18 +79,22 @@ void MergeSort(int l,int r)
 
 int main()
 {
+	clock_t sortStart, sortFinish,appStart,appFinish;
+	appStart = clock();
 	int count = 0;
-	while (scanf_s("%d",&res[count++])!=EOF);
-	//while (cin>>res[count++]);
-	clock_t start, finish;
-	start = clock();
+	//while (scanf_s("%d",&res[count++])!=EOF);
+	while (Read(&res[count++])!=-1);
+	sortStart = clock();
 	MergeSort(0,count-1);
-	finish = clock();
-	double duration = double(finish - start);
+	sortFinish = clock();
+	appFinish = clock();
+	double sortDuration = double(sortFinish - sortStart);
+	double appDuration = double(appFinish - appStart);
 	/*for (int i = 0; i < count-1; i++)
 	{
 		printf("%d ")
 	}*/
-	printf("%.0fms",duration);
+	printf("程序运行时间%.0fms\n", appDuration);
+	printf("排序时间%.0fms", sortDuration);
 	return 0;
 }
